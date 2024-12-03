@@ -12,34 +12,32 @@ class Screens3 extends StatelessWidget {
           fit: BoxFit.cover,
         ),
       ),
-      child: const Center(
-        child: Padding(
-          padding: EdgeInsets.only(top: 480),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                "Simplify Invoicing \nfor Faster Payments",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 40,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'Lexend',
-                  height: 1,
-                ),
+      child: const Padding(
+        padding: EdgeInsets.only(top: 300, left: 20, right: 20),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              "Simplify Invoicing \nfor Faster Payments",
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 36,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'Lexend',
+                height: 1,
               ),
-              SizedBox(height: 20),
-              Text(
-                "Simplify billing invoices. Through an automated\npayment system, payment will be faster and\neasier.",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 17,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'Lexend',
-                ),
+            ),
+            SizedBox(height: 20),
+            Text(
+              "Simplify billing invoices. Through an automated\npayment system, payment will be faster and\neasier.",
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 17,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'Lexend',
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

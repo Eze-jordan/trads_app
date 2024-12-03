@@ -78,206 +78,211 @@ class _HomePageState extends State<HomePage> {
             ),
 
             // Card Section with Chart
-            Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      children: [
+                        Container(
+                          height: 240,
+                          width: 260,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: const Color(0xFFFFFFFF),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                // Title and Icon
+                                const Row(
+                                  children: [
+                                    Text(
+                                      "€53.200",
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 24,
+                                        fontWeight: FontWeight.bold,
+                                        fontFamily: 'Lexend',
+                                      ),
+                                    ),
+                                    Spacer(),
+                                    Icon(
+                                      Icons.arrow_forward_ios,
+                                      size: 24,
+                                      color: Colors.black,
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 8),
+                                const Text(
+                                  "Received",
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 16,
+                                    fontFamily: 'Lexend',
+                                  ),
+                                ),
+                                const SizedBox(height: 16),
+
+                                // Chart Section
+                                Expanded(
+                                  child: SfCartesianChart(
+                                    primaryXAxis:
+                                        const CategoryAxis(isVisible: true),
+                                    primaryYAxis:
+                                        const NumericAxis(isVisible: false),
+                                    plotAreaBorderWidth: 0,
+                                    borderWidth: 0,
+                                    series: <CartesianSeries<SalesData,
+                                        String>>[
+                                      AreaSeries<SalesData, String>(
+                                        dataSource: <SalesData>[
+                                          SalesData('Aug', 10),
+                                          SalesData('Sep', 40),
+                                          SalesData('Oct', 70),
+                                          SalesData('Nov', 30),
+                                          SalesData('Dec', 100),
+                                        ],
+                                        xValueMapper: (SalesData sales, _) =>
+                                            sales.year,
+                                        yValueMapper: (SalesData sales, _) =>
+                                            sales.sales,
+                                        gradient: const LinearGradient(
+                                          colors: [
+                                            Color(0xFF4bd7a5),
+                                            Color(0x8A4BD7A6),
+                                          ],
+                                          begin: Alignment.topCenter,
+                                          end: Alignment.bottomCenter,
+                                        ),
+                                      ),
+                                    ],
+                                    trackballBehavior: TrackballBehavior(
+                                      enable: true,
+                                      tooltipSettings: const InteractiveTooltip(
+                                        enable: true,
+                                        color: Colors.black,
+                                        textStyle: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      lineWidth: 2,
+                                      lineColor: Colors.black,
+                                      activationMode: ActivationMode.singleTap,
+                                      builder:
+                                          (context, TrackballDetails details) {
+                                        final selectedPoint =
+                                            details.pointIndex;
+                                        final selectedData =
+                                            details.chartPointInfo;
+
+                                        // Update selected values
+                                        if (selectedPoint != null &&
+                                            selectedData != null) {
+                                          setState(() {
+                                            selectedMonth = selectedData.x;
+                                            selectedValue = selectedData.y;
+                                          });
+                                        }
+
+                                        return Container();
+                                      },
+                                    ),
+                                  ),
+                                ),
+
+                                if (selectedMonth != null &&
+                                    selectedValue != null)
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 16),
+                                    child: Text(
+                                      "Selected: $selectedMonth - €$selectedValue",
+                                      style: const TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                  ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
+                      // Pending Card
                       Container(
-                        height: 240,
-                        width: 260,
+                        height: 110,
+                        width: 100,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
                           color: const Color(0xFFFFFFFF),
                         ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(16.0),
+                        child: const Padding(
+                          padding: EdgeInsets.only(top: 25),
                           child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              // Title and Icon
-                              const Row(
-                                children: [
-                                  Text(
-                                    "€53.200",
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 24,
-                                      fontWeight: FontWeight.bold,
-                                      fontFamily: 'Lexend',
-                                    ),
-                                  ),
-                                  Spacer(),
-                                  Icon(
-                                    Icons.arrow_forward_ios,
-                                    size: 24,
+                              Text('12',
+                                  style: TextStyle(
                                     color: Colors.black,
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(height: 8),
-                              const Text(
-                                "Received",
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 16,
-                                  fontFamily: 'Lexend',
-                                ),
-                              ),
-                              const SizedBox(height: 16),
-
-                              // Chart Section
-                              Expanded(
-                                child: SfCartesianChart(
-                                  primaryXAxis:
-                                      const CategoryAxis(isVisible: true),
-                                  primaryYAxis:
-                                      const NumericAxis(isVisible: false),
-                                  plotAreaBorderWidth: 0,
-                                  borderWidth: 0,
-                                  series: <CartesianSeries<SalesData, String>>[
-                                    AreaSeries<SalesData, String>(
-                                      dataSource: <SalesData>[
-                                        SalesData('Aug', 10),
-                                        SalesData('Sep', 40),
-                                        SalesData('Oct', 70),
-                                        SalesData('Nov', 30),
-                                        SalesData('Dec', 100),
-                                      ],
-                                      xValueMapper: (SalesData sales, _) =>
-                                          sales.year,
-                                      yValueMapper: (SalesData sales, _) =>
-                                          sales.sales,
-                                      gradient: const LinearGradient(
-                                        colors: [
-                                          Color(0xFF4bd7a5),
-                                          Color(0x8A4BD7A6),
-                                        ],
-                                        begin: Alignment.topCenter,
-                                        end: Alignment.bottomCenter,
-                                      ),
-                                    ),
-                                  ],
-                                  trackballBehavior: TrackballBehavior(
-                                    enable: true,
-                                    tooltipSettings: const InteractiveTooltip(
-                                      enable: true,
-                                      color: Colors.black,
-                                      textStyle: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    lineWidth: 2,
-                                    lineColor: Colors.black,
-                                    activationMode: ActivationMode.singleTap,
-                                    builder:
-                                        (context, TrackballDetails details) {
-                                      final selectedPoint = details.pointIndex;
-                                      final selectedData =
-                                          details.chartPointInfo;
-
-                                      // Update selected values
-                                      if (selectedPoint != null &&
-                                          selectedData != null) {
-                                        setState(() {
-                                          selectedMonth = selectedData.x;
-                                          selectedValue = selectedData.y;
-                                        });
-                                      }
-
-                                      return Container();
-                                    },
-                                  ),
-                                ),
-                              ),
-
-                              if (selectedMonth != null &&
-                                  selectedValue != null)
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 16),
-                                  child: Text(
-                                    "Selected: $selectedMonth - €$selectedValue",
-                                    style: const TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                ),
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: 'Lexend',
+                                  )),
+                              Text('Pending',
+                                  style: TextStyle(
+                                    color: Color(0xFF686767),
+                                    fontSize: 15,
+                                    fontFamily: 'Lexend',
+                                  )),
+                            ],
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      // Unpaid Card
+                      Container(
+                        height: 110,
+                        width: 100,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: const Color(0xFFFFFFFF),
+                        ),
+                        child: const Padding(
+                          padding: EdgeInsets.only(top: 20),
+                          child: Column(
+                            children: [
+                              Text('05',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: 'Lexend',
+                                  )),
+                              Text('Unpaid',
+                                  style: TextStyle(
+                                    color: Color(0xFF686767),
+                                    fontSize: 15,
+                                    fontFamily: 'Lexend',
+                                  )),
                             ],
                           ),
                         ),
                       ),
                     ],
-                  ),
-                ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    // Pending Card
-                    Container(
-                      height: 110,
-                      width: 100,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: const Color(0xFFFFFFFF),
-                      ),
-                      child: const Padding(
-                        padding: EdgeInsets.only(top: 25),
-                        child: Column(
-                          children: [
-                            Text('12',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: 'Lexend',
-                                )),
-                            Text('Pending',
-                                style: TextStyle(
-                                  color: Color(0xFF686767),
-                                  fontSize: 15,
-                                  fontFamily: 'Lexend',
-                                )),
-                          ],
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-                    // Unpaid Card
-                    Container(
-                      height: 110,
-                      width: 100,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: const Color(0xFFFFFFFF),
-                      ),
-                      child: const Padding(
-                        padding: EdgeInsets.only(top: 20),
-                        child: Column(
-                          children: [
-                            Text('05',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: 'Lexend',
-                                )),
-                            Text('Unpaid',
-                                style: TextStyle(
-                                  color: Color(0xFF686767),
-                                  fontSize: 15,
-                                  fontFamily: 'Lexend',
-                                )),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                )
-              ],
+                  )
+                ],
+              ),
             ),
 
             // Upgrade to Enterprise Section
